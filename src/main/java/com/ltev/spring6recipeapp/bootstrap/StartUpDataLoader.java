@@ -47,6 +47,9 @@ public class StartUpDataLoader implements CommandLineRunner {
         oliveOil.setUom(new UnitOfMeasure("liter"));
         //ingredientRepository.save(oliveOil);
 
+        Category grill = new Category("grill");
+        Category extra = new Category("extra");
+
         Recipe recipe = new Recipe();
         recipe.setDescription("New recipe with a lot of olive oil");
         recipe.setPrepTime(45);
@@ -55,6 +58,8 @@ public class StartUpDataLoader implements CommandLineRunner {
         recipe.setNote(new Note("This is a note for the new recipe with a lot of olive oil"));
         recipe.addIngredient(oliveOil);
         recipe.addIngredient(butter);
+        recipe.addCategory(grill);
+        recipe.addCategory(extra);
         recipeRepository.save(recipe);
 
         Recipe foundRecipe = recipeRepository.findById(1L).get();
@@ -64,5 +69,7 @@ public class StartUpDataLoader implements CommandLineRunner {
         System.out.println(foundRecipe);
         System.out.println(foundIngredient1);
         System.out.println(foundIngredient2);
+        System.out.println(grill);
+        System.out.println(extra);
     }
 }

@@ -21,13 +21,13 @@ public class Category {
 
     @Setter
     @Getter
-    private String categoryName;
+    private String description;
 
     @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private Set<Recipe> recipes = new HashSet<>();
 
-    public Category(String categoryName) {
-        this.categoryName = categoryName;
+    public Category(String description) {
+        this.description = description;
     }
 
     /**
@@ -46,7 +46,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
+                ", categoryName='" + description + '\'' +
                 ", recipesId=" + recipes.stream().map(Recipe::getId).toList() +
                 '}';
     }

@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 public class StartUpDataLoader implements CommandLineRunner {
 
     RecipeRepository recipeRepository;
-    UnitOfMeasureRepository unitOfMeasureRepository;
     IngredientRepository ingredientRepository;
+    UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -46,6 +46,8 @@ public class StartUpDataLoader implements CommandLineRunner {
 
         oliveOil.setUom(new UnitOfMeasure("liter"));
         //ingredientRepository.save(oliveOil);
+
+        //oliveOil.setUom(unitOfMeasureRepository.findByDescription("Cub").get());
 
         Category grill = new Category("grill");
         Category extra = new Category("extra");

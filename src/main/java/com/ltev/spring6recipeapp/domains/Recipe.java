@@ -43,9 +43,15 @@ public class Recipe {
     @Setter
     private String url;
 
+    @Lob
     @Getter
     @Setter
     private String directions;
+
+    @Lob
+    @Getter
+    @Setter
+    private Byte[] image;
 
 //    New relational table:
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -68,10 +74,10 @@ public class Recipe {
     @Setter
     private Note note;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable( name = "recipe_category",
-                joinColumns = @JoinColumn(name = "recipe_id"),
-                inverseJoinColumns = @JoinColumn(name = "category_id"))
+                joinColumns = @JoinColumn(name = "recipe_id"),              // recipies_id - by default
+                inverseJoinColumns = @JoinColumn(name = "category_id"))     // categories_id - by default
     private Set<Category> categories = new HashSet<>();
 
 

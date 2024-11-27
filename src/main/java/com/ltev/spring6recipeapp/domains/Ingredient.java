@@ -1,12 +1,10 @@
 package com.ltev.spring6recipeapp.domains;
 
 import jakarta.persistence.*;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Entity
-@ToString
 public class Ingredient {
 
     @Id
@@ -17,7 +15,12 @@ public class Ingredient {
 
     @OneToOne(cascade = CascadeType.ALL)   // exception when detached (already saved) entity of uom
     private UnitOfMeasure uom;
-    //private Recipe recipe;
+
+    // In new table
+    // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToOne              // creates new column recipe_id in table Ingredient
+    private Recipe recipe;
 
     public Long getId() {
         return id;
@@ -45,5 +48,28 @@ public class Ingredient {
 
     public void setUom(UnitOfMeasure uom) {
         this.uom = uom;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    /**
+     * This method will be called automatically from:
+     * Recipe -> addIngredient()
+     */
+    void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", uom=" + uom +
+                ", recipeId=" + (recipe != null ? recipe.getId() : null) +
+                '}';
     }
 }

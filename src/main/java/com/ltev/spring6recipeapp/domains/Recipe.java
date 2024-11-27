@@ -3,6 +3,7 @@ package com.ltev.spring6recipeapp.domains;
 import jakarta.persistence.*;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,17 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    //private Set<Ingredient> ingredients;
+
+//    New relational table:
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "recipe_ingredient",
+//            joinColumns = @JoinColumn(name = "recipe_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+
+//     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)  // by default new table : recipe_ingredients
+
+    @OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)   // mapped by - no new table needed
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)
     private Difficulty difficulty;
@@ -91,6 +102,15 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+        ingredient.setRecipe(this);
+    }
+
     public Difficulty getDifficulty() {
         return difficulty;
     }
@@ -106,4 +126,6 @@ public class Recipe {
     public void setNote(Note note) {
         this.note = note;
     }
+
+
 }

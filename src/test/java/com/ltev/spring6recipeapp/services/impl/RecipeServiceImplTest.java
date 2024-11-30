@@ -10,8 +10,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 
@@ -42,5 +44,14 @@ class RecipeServiceImplTest {
 
         assertEquals(1, recipeService.getRecipes().size());
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getRecipeById() {
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
+
+        assertTrue(recipeService.getRecipe(1L).isPresent());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 }

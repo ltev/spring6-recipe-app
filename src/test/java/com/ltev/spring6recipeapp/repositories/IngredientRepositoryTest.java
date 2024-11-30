@@ -31,7 +31,7 @@ class IngredientRepositoryTest {
         Ingredient ingredient = new Ingredient();
         ingredient.setDescription("Olive Oil");
         ingredient.setAmount(new BigDecimal("2.5"));
-        ingredient.setUom(new UnitOfMeasure("teaspoon"));
+        ingredient.setUom(unitOfMeasureRepository.save(new UnitOfMeasure("teaspoon")));
 
         ingredientRepository.save(ingredient);
 

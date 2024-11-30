@@ -45,8 +45,14 @@ public class StartUpDataLoader implements CommandLineRunner {
 
         creator.setDescription("Ham Sandwich");
         creator.setPrepTime(15);
+        creator.setCookTime(0);
         creator.setServings(2);
         creator.setDifficulty(Difficulty.EASY);
+        creator.setDirections("""
+                1. Buy some bread
+                2. Cut some slices
+                3. Put some butter on the slices
+                4. Put some ham on the slices""");
         creator.setNote("You only need basic food preparation skills.");
 
         // description, amount, unit of measure

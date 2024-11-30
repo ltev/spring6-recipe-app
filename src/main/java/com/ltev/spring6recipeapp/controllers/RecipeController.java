@@ -18,8 +18,8 @@ public class RecipeController {
 
     private RecipeService recipeService;
 
-    @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    @GetMapping("/show/{id}")
+    public String showById(@PathVariable Long id, Model model) {
         Optional<Recipe> recipe = recipeService.getRecipe(id);
         if (recipe.isPresent()) {
             model.addAttribute("recipe", recipe.get());

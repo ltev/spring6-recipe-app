@@ -61,6 +61,14 @@ public class RecipeBuilder {
         return this;
     }
 
+    public void setCookTime(int time) {
+        recipe.setCookTime(time);
+    }
+
+    public void setDirections(String directions) {
+        recipe.setDirections(directions);
+    }
+
     public Recipe build() {
         return recipe;
     }
@@ -68,8 +76,11 @@ public class RecipeBuilder {
     // == PRIVATE HELPER METHODS ==
 
     private UnitOfMeasure findOrSaveUnitOfMeasure(String description) {
-        return unitOfMeasureRepository.findByDescriptionIgnoreCase(description)
-                .orElseGet(() -> unitOfMeasureRepository.save(new UnitOfMeasure(description)));
+        // problem with indexes !!!! downgrading spring should help !!
+
+//        return unitOfMeasureRepository.findByDescriptionIgnoreCase(description)
+//                .orElseGet(() -> unitOfMeasureRepository.save(new UnitOfMeasure(description)));
+        return unitOfMeasureRepository.save(new UnitOfMeasure(description));
     }
 
 

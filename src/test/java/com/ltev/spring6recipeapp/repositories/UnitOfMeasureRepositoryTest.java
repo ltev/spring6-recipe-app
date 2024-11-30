@@ -24,6 +24,8 @@ class UnitOfMeasureRepositoryTest {
 
     @Test
     void save() throws InterruptedException {
+        long startRepositorySize = unitOfMeasureRepository.count();
+
         UnitOfMeasure teaspoon = new UnitOfMeasure("teaspoon");
         UnitOfMeasure gram = new UnitOfMeasure("gram");
 
@@ -33,7 +35,7 @@ class UnitOfMeasureRepositoryTest {
 
         assertNotNull(teaspoon.getId());
         assertNotNull(gram.getId());
-        assertEquals(2, unitOfMeasureRepository.count());
+        assertEquals(startRepositorySize + 2, unitOfMeasureRepository.count());
     }
 
     @Test
@@ -56,7 +58,7 @@ class UnitOfMeasureRepositoryTest {
         unitOfMeasureRepository.save(teaspoon);
         unitOfMeasureRepository.save(gram);
 
-        assertEquals(teaspoon.getId(), unitOfMeasureRepository.findByDescription("teaspoon").get().getId());
-        assertEquals(gram.getId(), unitOfMeasureRepository.findByDescription("gram").get().getId());
+        assertEquals(teaspoon.getId(), unitOfMeasureRepository.findByDescriptionIgnoreCase("teaspoon").get().getId());
+        assertEquals(gram.getId(), unitOfMeasureRepository.findByDescriptionIgnoreCase("gram").get().getId());
     }
 }

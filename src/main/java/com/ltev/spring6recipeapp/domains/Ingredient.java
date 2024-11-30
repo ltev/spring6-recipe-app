@@ -13,7 +13,7 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    @OneToOne(cascade = CascadeType.ALL)   // exception when detached (already saved) entity of uom
+    @OneToOne(cascade = CascadeType.DETACH)
     private UnitOfMeasure uom;
 
     // In new table

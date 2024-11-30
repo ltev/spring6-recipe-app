@@ -1,77 +1,61 @@
 package com.ltev.spring6recipeapp.bootstrap;
 
-import com.ltev.spring6recipeapp.domains.*;
-import com.ltev.spring6recipeapp.repositories.IngredientRepository;
+import com.ltev.spring6recipeapp.domains.Difficulty;
 import com.ltev.spring6recipeapp.repositories.RecipeRepository;
 import com.ltev.spring6recipeapp.repositories.UnitOfMeasureRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Configuration
 @AllArgsConstructor
 public class StartUpDataLoader implements CommandLineRunner {
 
-    RecipeRepository recipeRepository;
-    IngredientRepository ingredientRepository;
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    private RecipeRepository recipeRepository;
+    private UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Override
-    public void run(String... args) throws Exception {
-        UnitOfMeasure gram = new UnitOfMeasure("gram");
-        // unitOfMeasureRepository.save(gram);      // detached entity to persist exception in ingredientRepository save
+    public void run(String... args) {
+        addRecipe1();
+        addRecipe2();
+    }
 
-        UnitOfMeasure teaspoon = new UnitOfMeasure("teaspoon");
+    private void addRecipe1() {
+        RecipeBuilder creator = new RecipeBuilder(unitOfMeasureRepository);
 
-        Ingredient oliveOil = new Ingredient();
-        oliveOil.setDescription("Olive Oil");
-        oliveOil.setAmount(new BigDecimal("2.5"));
-        oliveOil.setUom(gram);
+        creator.setDescription("New recipe with a lot of olive oil");
+        creator.setPrepTime(45);
+        creator.setServings(4);
+        creator.setDifficulty(Difficulty.HARD);
+        creator.setNote("This is a note for the new recipe with a lot of olive oil");
 
-        Ingredient butter = new Ingredient();
-        butter.setDescription("Butter");
-        butter.setAmount(new BigDecimal("100"));
-        butter.setUom(new UnitOfMeasure("teaspoon"));
+        // description, amount, unit of measure
+        creator.addIngredient(List.of("Olive Oil", "100", "Gram"));
+        creator.addIngredient(List.of("Butter", "2.5", "Teaspoon"));
 
-        try {
-            // ingredientRepository.save(oliveOil);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // categories
+        creator.addCategories(List.of("grill", "extra", "super"));
+        recipeRepository.save(creator.build());
+    }
 
-        oliveOil.setUom(teaspoon);
-        //ingredientRepository.save(oliveOil);
+    private void addRecipe2() {
+        RecipeBuilder creator = new RecipeBuilder(unitOfMeasureRepository);
 
-        oliveOil.setUom(new UnitOfMeasure("liter"));
-        //ingredientRepository.save(oliveOil);
+        creator.setDescription("Ham Sandwich");
+        creator.setPrepTime(15);
+        creator.setServings(2);
+        creator.setDifficulty(Difficulty.EASY);
+        creator.setNote("You only need basic food preparation skills.");
 
-        //oliveOil.setUom(unitOfMeasureRepository.findByDescription("Cub").get());
+        // description, amount, unit of measure
+        creator.addIngredient(List.of("Ham", "100", "Gram"));
+        creator.addIngredient(List.of("Butter", "50", "Gram"));
+        creator.addIngredient(List.of("Bread", "2", "Slice"));
 
-        Category grill = new Category("grill");
-        Category extra = new Category("extra");
-
-        Recipe recipe = new Recipe();
-        recipe.setDescription("New recipe with a lot of olive oil");
-        recipe.setPrepTime(45);
-        recipe.setServings(4);
-        recipe.setDifficulty(Difficulty.HARD);
-        recipe.setNote(new Note("This is a note for the new recipe with a lot of olive oil"));
-        recipe.addIngredient(oliveOil);
-        recipe.addIngredient(butter);
-        recipe.addCategory(grill);
-        recipe.addCategory(extra);
-        recipeRepository.save(recipe);
-
-        Recipe foundRecipe = recipeRepository.findById(1L).get();
-        Ingredient foundIngredient1 = ingredientRepository.findById(1L).get();
-        Ingredient foundIngredient2 = ingredientRepository.findById(2L).get();
-
-        System.out.println(foundRecipe);
-        System.out.println(foundIngredient1);
-        System.out.println(foundIngredient2);
-        System.out.println(grill);
-        System.out.println(extra);
+        // categories
+        creator.addCategories(List.of("sandwich", "ham", "easy"));
+        recipeRepository.save(creator.build());
     }
 }

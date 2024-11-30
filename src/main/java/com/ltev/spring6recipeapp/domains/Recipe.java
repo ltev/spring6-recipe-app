@@ -71,7 +71,6 @@ public class Recipe {
 
     @OneToOne(cascade = CascadeType.ALL)
     @Getter
-    @Setter
     private Note note;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -85,17 +84,24 @@ public class Recipe {
         return Collections.unmodifiableSet(ingredients);
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    public Recipe addIngredient(Ingredient ingredient) {
         ingredients.add(ingredient);
         ingredient.setRecipe(this);
+        return this;
     }
 
     public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);
     }
 
-    public void addCategory(Category category) {
+    public Recipe addCategory(Category category) {
         categories.add(category);
         category.addRecipe(this);
+        return this;
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
+        note.setRecipe(this);
     }
 }

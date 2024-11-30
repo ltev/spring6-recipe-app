@@ -18,13 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class IngredientRepositoryTest {
 
     @Autowired
-    private IngredientRepository ingredientRepository;
+    IngredientRepository ingredientRepository;
 
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Test
     void save() {
+        long startSizeIngredient = ingredientRepository.count();
+        long startSizeUom = unitOfMeasureRepository.count();
+
         Ingredient ingredient = new Ingredient();
         ingredient.setDescription("Olive Oil");
         ingredient.setAmount(new BigDecimal("2.5"));
@@ -32,9 +35,9 @@ class IngredientRepositoryTest {
 
         ingredientRepository.save(ingredient);
 
-        assertEquals(1, ingredientRepository.count());
+        assertEquals(startSizeIngredient + 1, ingredientRepository.count());
 
-        assertEquals(1, unitOfMeasureRepository.count());
-        assertNotNull(unitOfMeasureRepository.findByDescription("teaspoon").get());
+        assertEquals(startSizeUom + 1, unitOfMeasureRepository.count());
+        assertNotNull(unitOfMeasureRepository.findByDescriptionIgnoreCase("teaspoon").get());
     }
 }

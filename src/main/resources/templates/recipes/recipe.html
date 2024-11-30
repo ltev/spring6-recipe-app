@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe</title>
+</head>
+<body>
+
+<div th:if="${errorMsg}" th:text="${errorMsg}">Error Msg</div>
+
+<div th:if="${recipe}" th:object="${recipe}">
+  <p th:text="*{id}">Recipe</p>
+  <p th:text="*{categories}">Recipe</p>
+  <p th:text="*{cookTime}">Recipe</p>
+  <p th:text="*{difficulty}">Recipe</p>
+  <p th:text="*{description}">Recipe</p>
+  <p th:text="*{directions}">Recipe</p>
+  <p th:text="*{ingredients}">Recipe</p>
+  <p th:text="*{note}">Recipe</p>
+  <p th:text="*{servings}">Recipe</p>
+  <p th:text="*{prepTime}">Recipe</p>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.ltev.spring6recipeapp.domains;
 
+import com.ltev.spring6recipeapp.converters.using_annotations.Alias;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,15 @@ public class UnitOfMeasure {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

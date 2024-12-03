@@ -9,7 +9,6 @@
 <body>
 
 <h2>List of Recipes:</h2>
-
 <table class="table table-hover container-md">
     <thead>
         <tr>
@@ -21,7 +20,8 @@
         <tr th:each="recipe : ${recipes}">
             <td th:text="${recipe.id}">id</td>
             <td th:text="${recipe.description}">description</td>
-            <td> <a th:href="@{'/recipes/show/' + ${ recipe.id}}" th:text="view">view link </a></td>
+            <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/show' }" th:text="view">view link </a></td>
+            <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/update' }" th:text="update">view link </a></td>
         </tr>
     </tbody>
 </table>

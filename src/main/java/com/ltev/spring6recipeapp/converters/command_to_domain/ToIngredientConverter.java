@@ -26,6 +26,10 @@ public class ToIngredientConverter extends AbstractCommandToDomainConverter<Ingr
      */
     @Override
     public Ingredient convert(IngredientCommand source) {
+        if (source == null) {
+            return null;
+        }
+
         Ingredient ingredient = super.convert(source);
         /*
          * Working with dumbRecipe

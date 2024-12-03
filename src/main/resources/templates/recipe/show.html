@@ -57,13 +57,17 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
+
         <div class="card-header bg-primary text-white">
-          <h4 class="card-title">Ingredients</h4>
+            <h4 class="card-title">Ingredients</h4>
+          <div class="text-end">
+            <h3><a href="#" class="badge bg-secondary" th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/new'}">New</a>
+              <a href="#" class="badge bg-secondary align-end" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}">View</a>
+            </h3>
+          </div>
         </div>
+
         <div class="card-body">
-          <p class="text-end" >
-            <a href="#" class="badge bg-secondary"  th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}">View</a>
-          </p>
           <ul>
             <li th:each="ingredient : ${recipe.ingredients}">
               <div th:text="${ingredient.amount + ' ' +  ingredient.uom + ' - ' +  ingredient.description}"></div>

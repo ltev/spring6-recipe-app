@@ -13,12 +13,15 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    /*
+     * When using @OneToOne - exception from database (private key violation),
+     * when trying to save uom with the same id for the second time
+     */
+    @ManyToOne(cascade = CascadeType.DETACH)
     private UnitOfMeasure uom;
 
     // In new table
     // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
     @ManyToOne              // creates new column recipe_id in table Ingredient
     private Recipe recipe;
 

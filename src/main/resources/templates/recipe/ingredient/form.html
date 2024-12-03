@@ -10,12 +10,13 @@
 <body>
 
 <div>
-    <h3>People Form</h3>
-    <form th:object="${ingredient}" th:action="@{./update}" method="post">
+    <h3>Ingredient Form</h3>
+    <form th:object="${ingredient}" th:action="@{/recipe/ingredient/save}" method="post">
 <!--        <ul th:if="${#fields.hasErrors('*')}">-->
 <!--            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>-->
 <!--        </ul>-->
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{recipeId}">
 
         <div class="mb-3" >
             <label for="" class="form-label">Description</label>

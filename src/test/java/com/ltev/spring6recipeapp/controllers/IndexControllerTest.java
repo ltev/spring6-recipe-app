@@ -50,12 +50,12 @@ class IndexControllerTest {
     void getIndexPage() {
         when(recipeCommandService.getAll()).thenReturn(List.of(new RecipeCommand(), new RecipeCommand()));
 
-        ArgumentCaptor<Set<Recipe>> captor = ArgumentCaptor.forClass(Set.class);
+        ArgumentCaptor<List<Recipe>> captor = ArgumentCaptor.forClass(List.class);
 
         assertEquals("index", controller.getIndexPage(model));
         verify(recipeCommandService, times(1)).getAll();
         verify(model, times(1)).addAttribute(eq("recipes"), captor.capture());
-        Set<Recipe> setInController = captor.getValue();
+        List<Recipe> setInController = captor.getValue();
         assertEquals(2, setInController.size());
     }
 }

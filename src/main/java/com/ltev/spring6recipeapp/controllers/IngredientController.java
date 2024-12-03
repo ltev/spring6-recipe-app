@@ -36,7 +36,6 @@ public class IngredientController {
     public String showIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
         Optional<IngredientCommand> ingredient = ingredientService.getById(ingredientId);
         if (ingredient.isPresent()) {
-            System.out.println(ingredient.get());
             model.addAttribute("ingredient", ingredient.get());
         } else {
             throw new RuntimeException("Not found");
@@ -57,11 +56,25 @@ public class IngredientController {
         return "recipe/ingredient/form";
     }
 
-    @PostMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
+    @GetMapping("/recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable Long recipeId, Model model) {
+        Optional<RecipeCommand> recipe = recipeService.getById(recipeId);
+        if (recipe.isPresent()) {
+            IngredientCommand ingredientCommand = new IngredientCommand();
+            ingredientCommand.setRecipeId(recipeId);
+            model.addAttribute("ingredient", ingredientCommand);
+            model.addAttribute("uomList", uomService.getAll());
+        } else {
+            throw new RuntimeException("Not found");
+        }
+        return "recipe/ingredient/form";
+    }
+
+    @PostMapping("/recipe/ingredient/save")
     public String processForm(@ModelAttribute("ingredient") IngredientCommand ingredient,
                               @RequestParam("uomId") Long uomId) {
         ingredient = ingredientService.save(ingredient, uomId);
-        return String.format("redirect:/recipe/%d/ingredient/%d/show",
-                ingredient.getRecipeId(), ingredient.getId());
+        return String.format("redirect:/recipe/%d/show", ingredient.getRecipeId());
     }
+
 }

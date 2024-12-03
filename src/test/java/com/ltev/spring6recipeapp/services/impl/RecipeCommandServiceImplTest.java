@@ -1,9 +1,15 @@
 package com.ltev.spring6recipeapp.services.impl;
 
+import com.ltev.spring6recipeapp.converters.command_to_domain.ToCategoryConverter;
+import com.ltev.spring6recipeapp.converters.command_to_domain.ToNoteConverter;
+import com.ltev.spring6recipeapp.converters.command_to_domain.ToRecipeConverter;
+import com.ltev.spring6recipeapp.converters.domain_to_command.FromCategoryConverter;
+import com.ltev.spring6recipeapp.converters.domain_to_command.FromNoteConverter;
+import com.ltev.spring6recipeapp.converters.domain_to_command.FromRecipeConverter;
 import com.ltev.spring6recipeapp.domains.Difficulty;
 import com.ltev.spring6recipeapp.domains.Recipe;
 import com.ltev.spring6recipeapp.repositories.RecipeRepository;
-import com.ltev.spring6recipeapp.services.RecipeService;
+import com.ltev.spring6recipeapp.services.RecipeCommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,9 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 
-class RecipeServiceImplTest {
+class RecipeCommandServiceImplTest {
 
-    RecipeService recipeService;
+    RecipeCommandService recipeCommandService;
 
     @Mock
     RecipeRepository recipeRepository;
@@ -27,9 +33,9 @@ class RecipeServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
-
-        System.out.println(recipeRepository);
+        recipeCommandService = new RecipeCommandServiceImpl(recipeRepository,
+                new FromRecipeConverter(new FromNoteConverter(), new FromCategoryConverter()),
+                new ToRecipeConverter(new ToNoteConverter(), new ToCategoryConverter()));
     }
 
     @Test
@@ -42,7 +48,7 @@ class RecipeServiceImplTest {
 
         when(recipeRepository.findAll()).thenReturn(recipes);
 
-        assertEquals(1, recipeService.getRecipes().size());
+        assertEquals(1, recipeCommandService.getAll().size());
         verify(recipeRepository, times(1)).findAll();
     }
 
@@ -50,8 +56,15 @@ class RecipeServiceImplTest {
     void getRecipeById() {
         when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
 
-        assertTrue(recipeService.getRecipe(1L).isPresent());
+        assertTrue(recipeCommandService.getById(1L).isPresent());
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    void deleteById() {
+        recipeCommandService.deleteById(1L);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
     }
 }

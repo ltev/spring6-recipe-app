@@ -1,4 +1,4 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.IngredientCommand;
 import com.ltev.spring6recipeapp.commands.UnitOfMeasureCommand;
@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IngredientConverterTest {
+class ToIngredientConverterTest {
 
-    IngredientConverter converter;
+    ToIngredientConverter converter;
 
     @BeforeEach
     void setUp() {
-        converter = new IngredientConverter(new UnitOfMeasureConverter());
+        converter = new ToIngredientConverter(new ToUnitOfMeasureConverter());
     }
 
     @Test

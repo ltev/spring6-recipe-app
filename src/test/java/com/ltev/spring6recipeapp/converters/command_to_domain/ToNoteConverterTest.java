@@ -1,4 +1,4 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.NoteCommand;
 import com.ltev.spring6recipeapp.domains.Note;
@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NoteConverterTest {
+class ToNoteConverterTest {
 
-    NoteConverter converter;
+    ToNoteConverter converter;
 
     @BeforeEach
     void setUp() {
-        converter = new NoteConverter();
+        converter = new ToNoteConverter();
     }
 
     @Test

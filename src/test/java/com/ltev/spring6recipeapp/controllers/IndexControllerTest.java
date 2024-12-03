@@ -1,7 +1,8 @@
 package com.ltev.spring6recipeapp.controllers;
 
+import com.ltev.spring6recipeapp.commands.RecipeCommand;
 import com.ltev.spring6recipeapp.domains.Recipe;
-import com.ltev.spring6recipeapp.services.RecipeService;
+import com.ltev.spring6recipeapp.services.RecipeCommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +26,7 @@ class IndexControllerTest {
     IndexController controller;
 
     @Mock
-    RecipeService recipeService;
+    RecipeCommandService recipeCommandService;
 
     @Mock
     Model model;
@@ -32,7 +34,7 @@ class IndexControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        controller = new IndexController(recipeService);
+        controller = new IndexController(recipeCommandService);
     }
 
     @Test
@@ -46,12 +48,12 @@ class IndexControllerTest {
 
     @Test
     void getIndexPage() {
-        when(recipeService.getRecipes()).thenReturn(Set.of(new Recipe(), new Recipe()));
+        when(recipeCommandService.getAll()).thenReturn(List.of(new RecipeCommand(), new RecipeCommand()));
 
         ArgumentCaptor<Set<Recipe>> captor = ArgumentCaptor.forClass(Set.class);
 
         assertEquals("index", controller.getIndexPage(model));
-        verify(recipeService, times(1)).getRecipes();
+        verify(recipeCommandService, times(1)).getAll();
         verify(model, times(1)).addAttribute(eq("recipes"), captor.capture());
         Set<Recipe> setInController = captor.getValue();
         assertEquals(2, setInController.size());

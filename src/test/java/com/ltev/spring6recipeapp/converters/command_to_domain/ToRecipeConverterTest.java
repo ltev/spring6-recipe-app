@@ -1,4 +1,4 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.CategoryCommand;
 import com.ltev.spring6recipeapp.commands.NoteCommand;
@@ -12,13 +12,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RecipeConverterTest {
+class ToRecipeConverterTest {
 
-    RecipeConverter converter;
+    ToRecipeConverter converter;
 
     @BeforeEach
     void setUp() {
-        converter = new RecipeConverter(new NoteConverter(), new CategoryConverter());
+        converter = new ToRecipeConverter(new ToNoteConverter(), new ToCategoryConverter());
     }
 
     @Test
@@ -48,7 +48,7 @@ class RecipeConverterTest {
 
         RecipeCommand cmd = new RecipeCommand();
         cmd.setId(10L);
-        cmd.setDescription("Note Description");;
+        cmd.setDescription("Recipe Description");;
         cmd.setPrepTime(12);
         cmd.setCookTime(45);
         cmd.setServings(3);

@@ -1,21 +1,19 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.CategoryCommand;
-import com.ltev.spring6recipeapp.commands.NoteCommand;
 import com.ltev.spring6recipeapp.domains.Category;
-import com.ltev.spring6recipeapp.domains.Note;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CategoryConverterTest {
+class ToCategoryConverterTest {
 
-    CategoryConverter converter;
+    ToCategoryConverter converter;
 
     @BeforeEach
     void setUp() {
-        converter = new CategoryConverter();
+        converter = new ToCategoryConverter();
     }
 
     @Test

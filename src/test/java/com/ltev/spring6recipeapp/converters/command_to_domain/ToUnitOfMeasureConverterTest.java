@@ -1,4 +1,4 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.UnitOfMeasureCommand;
 import com.ltev.spring6recipeapp.domains.UnitOfMeasure;
@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UnitOfMeasureConverterTest {
+class ToUnitOfMeasureConverterTest {
 
-    static UnitOfMeasureConverter converter = new UnitOfMeasureConverter();
+    static ToUnitOfMeasureConverter converter = new ToUnitOfMeasureConverter();
 
     @BeforeAll
     static void setUpBeforeClass() {
-        converter = new UnitOfMeasureConverter();
+        converter = new ToUnitOfMeasureConverter();
     }
 
     @Test

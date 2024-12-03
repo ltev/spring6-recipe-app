@@ -1,7 +1,5 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
-import com.ltev.spring6recipeapp.commands.UnitOfMeasureCommand;
-import com.ltev.spring6recipeapp.domains.UnitOfMeasure;
 import org.springframework.core.convert.converter.Converter;
 
 import java.lang.reflect.Field;
@@ -34,7 +32,9 @@ public abstract class AbstractCommandToDomainConverter<S, T> implements Converte
 
                                 sourceField.setAccessible(false);
                                 desField.setAccessible(false);
-                            } catch (NoSuchFieldException | IllegalAccessException e) {
+                            } catch (NoSuchFieldException ignored) {
+                                // continue
+                            } catch (IllegalAccessException e) {
                                 throw new RuntimeException(e);
                             }
                         });

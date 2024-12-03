@@ -1,11 +1,11 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.UnitOfMeasureCommand;
 import com.ltev.spring6recipeapp.domains.UnitOfMeasure;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UnitOfMeasureConverter extends AbstractCommandToDomainConverter<UnitOfMeasureCommand, UnitOfMeasure> {
+public class ToUnitOfMeasureConverter extends AbstractCommandToDomainConverter<UnitOfMeasureCommand, UnitOfMeasure> {
 
     @Override
     public UnitOfMeasure convert(UnitOfMeasureCommand source) {

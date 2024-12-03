@@ -10,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class RecipeCommandServiceImpl extends AbstractCommandService<RecipeCommand, Recipe, Long> implements RecipeCommandService {
+public class RecipeCommandServiceImpl extends AbstractCommandService<RecipeCommand, Recipe, Long>
+        implements RecipeCommandService {
 
-    public RecipeCommandServiceImpl(RecipeRepository repository, FromRecipeConverter toDomainConverter, ToRecipeConverter fromDomainConverter) {
-        super(repository, toDomainConverter, fromDomainConverter);
+    public RecipeCommandServiceImpl(RecipeRepository repository,
+                                    FromRecipeConverter fromDomainConverter,
+                                    ToRecipeConverter toDomainConverter) {
+        super(repository, fromDomainConverter, toDomainConverter);
     }
 }

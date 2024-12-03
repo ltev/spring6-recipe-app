@@ -1,8 +1,10 @@
-package com.ltev.spring6recipeapp.converters;
+package com.ltev.spring6recipeapp.converters.command_to_domain;
 
 import com.ltev.spring6recipeapp.commands.CategoryCommand;
 import com.ltev.spring6recipeapp.commands.NoteCommand;
 import com.ltev.spring6recipeapp.commands.RecipeCommand;
+import com.ltev.spring6recipeapp.converters.using_annotations.AbstractConverterUsingAnnotation;
+import com.ltev.spring6recipeapp.domains.Note;
 import com.ltev.spring6recipeapp.domains.Recipe;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -10,10 +12,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class RecipeConverter extends AbstractCommandToDomainConverter<RecipeCommand, Recipe> {
+public class ToRecipeConverter extends AbstractConverterUsingAnnotation<RecipeCommand, Recipe> {
+// AbstractCommandToDomainConverter<RecipeCommand, Recipe>
 
-    private final NoteConverter noteConverter;
-    private final CategoryConverter categoryConverter;
+    private final ToNoteConverter noteConverter;
+    private final ToCategoryConverter categoryConverter;
 
     @Override
     protected Recipe getNewEmptyConvertedInstance() {

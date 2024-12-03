@@ -19,6 +19,13 @@ public class FromIngredientConverter extends AbstractDomainToCommandConverter<In
     }
 
     @Override
+    public IngredientCommand convert(Ingredient source) {
+        IngredientCommand cmd = super.convert(source);
+        cmd.setRecipeId(source.getRecipe().getId());
+        return cmd;
+    }
+
+    @Override
     protected Converter getConverter(Class<?> fromType) {
         if (fromType == UnitOfMeasure.class) {
             return unitOfMeasureConverter;

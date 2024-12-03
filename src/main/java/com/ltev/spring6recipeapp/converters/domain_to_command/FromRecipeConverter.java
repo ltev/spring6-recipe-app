@@ -1,6 +1,7 @@
 package com.ltev.spring6recipeapp.converters.domain_to_command;
 
 import com.ltev.spring6recipeapp.commands.RecipeCommand;
+import com.ltev.spring6recipeapp.converters.using_annotations.AbstractConverterUsingAnnotation;
 import com.ltev.spring6recipeapp.domains.Category;
 import com.ltev.spring6recipeapp.domains.Note;
 import com.ltev.spring6recipeapp.domains.Recipe;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class FromRecipeConverter extends AbstractDomainToCommandConverter<Recipe, RecipeCommand> {
+public class FromRecipeConverter extends AbstractConverterUsingAnnotation<Recipe, RecipeCommand> {
+// AbstractDomainToCommandConverter<Recipe, RecipeCommand>
 
     private final FromNoteConverter noteConverter;
     private final FromCategoryConverter categoryConverter;

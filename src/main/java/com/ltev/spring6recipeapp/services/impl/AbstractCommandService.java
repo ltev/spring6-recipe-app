@@ -1,7 +1,5 @@
 package com.ltev.spring6recipeapp.services.impl;
 
-import com.ltev.spring6recipeapp.commands.RecipeCommand;
-import com.ltev.spring6recipeapp.domains.Recipe;
 import com.ltev.spring6recipeapp.services.BaseService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.stream.StreamSupport;
 
 /**
  * @param <C> - converted command type
- * @param <T> - original domain repository type
+ * @param <T> - original domain type
  * @param <ID> - id
  */
 @AllArgsConstructor

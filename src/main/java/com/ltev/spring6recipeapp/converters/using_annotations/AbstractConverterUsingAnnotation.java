@@ -55,7 +55,7 @@ public abstract class AbstractConverterUsingAnnotation<S, T> implements Converte
                         (m1, m2) -> {throw new RuntimeException("Parallel not supported!");});
     }
 
-    protected Converter getConverter(Class<?> fromType) {
+    protected Converter<Object, Object> getConverter(Class<?> fromType) {
         throw new RuntimeException("Not implemented for class: " + fromType);
     }
 

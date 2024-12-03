@@ -1,6 +1,6 @@
 package com.ltev.spring6recipeapp.controllers;
 
-import com.ltev.spring6recipeapp.services.RecipeService;
+import com.ltev.spring6recipeapp.services.RecipeCommandService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AllArgsConstructor
 public class IndexController {
 
-    private RecipeService recipeService;
+    private RecipeCommandService recipeCommandService;
 
     @GetMapping
     public String getIndexPage(Model model) {
-        model.addAttribute("recipes", recipeService.getRecipes());
+        model.addAttribute("recipes", recipeCommandService.getAll());
         return "index";
     }
 }

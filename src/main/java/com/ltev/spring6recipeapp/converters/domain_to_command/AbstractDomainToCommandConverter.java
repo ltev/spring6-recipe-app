@@ -19,11 +19,13 @@ public abstract class AbstractDomainToCommandConverter<S, T> implements Converte
         T toObject = getNewEmptyConvertedInstance();
         /*
          * Stream on destinationCommandObject (less fields than domain object)
+         *
+         * Skip fields when not found
          */
         Arrays.stream(toObject.getClass().getDeclaredFields())
                 .forEach(toField -> {
                     try {
-                        Field sourceField = source.getClass().getDeclaredField(toField.getName());
+                        Field sourceField  = source.getClass().getDeclaredField(toField.getName());
                         sourceField.setAccessible(true);
                         toField.setAccessible(true);
 
@@ -34,7 +36,9 @@ public abstract class AbstractDomainToCommandConverter<S, T> implements Converte
 
                         sourceField.setAccessible(false);
                         toField.setAccessible(false);
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                    } catch (NoSuchFieldException ignored) {
+                        // continue
+                    } catch (IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
                 });

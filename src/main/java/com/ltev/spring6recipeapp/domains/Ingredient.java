@@ -23,6 +23,7 @@ public class Ingredient {
     // In new table
     // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ManyToOne              // creates new column recipe_id in table Ingredient
+    @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
     public Long getId() {

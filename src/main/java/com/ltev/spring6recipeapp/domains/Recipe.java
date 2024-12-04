@@ -71,7 +71,8 @@ public class Recipe {
 
 //     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)  // by default new table : recipe_ingredients
 
-    @OneToMany(mappedBy="recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)   // mapped by - no new table needed
+    @OneToMany(mappedBy="recipe", fetch = FetchType.EAGER,      // mapped by - no new table needed
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @Alias("ingredients")
     private Set<Ingredient> ingredients = new HashSet<>();
 
@@ -117,5 +118,10 @@ public class Recipe {
     public void setNote(Note note) {
         this.note = note;
         note.setRecipe(this);
+    }
+
+    // orphanRemoval = true
+    public void deleteIngredientById(Long id) {
+        ingredients.removeIf(ingredient -> ingredient.getId().equals(id));
     }
 }

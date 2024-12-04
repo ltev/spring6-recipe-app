@@ -45,4 +45,11 @@ public class IngredientCommandServiceImpl extends AbstractCommandService<Ingredi
         ingredient.setUom(uomCmd.get());
         return super.save(ingredient);
     }
+
+    @Override
+    public void deleteById(Long recipeId, Long ingredientId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new RuntimeException("Recipe not found"));
+        recipe.deleteIngredientById(ingredientId);
+        recipeRepository.save(recipe);
+    }
 }

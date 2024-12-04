@@ -21,7 +21,8 @@
             <td th:text="${recipe.id}">id</td>
             <td th:text="${recipe.description}">description</td>
             <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/show' }" th:text="view">view link </a></td>
-            <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/update' }" th:text="update">view link </a></td>
+            <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/update' }" th:text="update">update link </a></td>
+            <td> <a th:href="@{'/recipe/' + ${recipe.id} + '/delete' }" th:text="delete">delete link </a></td>
         </tr>
     </tbody>
 </table>

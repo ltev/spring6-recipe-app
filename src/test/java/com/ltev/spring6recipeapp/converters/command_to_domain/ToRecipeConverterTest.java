@@ -1,9 +1,9 @@
 package com.ltev.spring6recipeapp.converters.command_to_domain;
 
-import com.ltev.spring6recipeapp.commands.CategoryCommand;
-import com.ltev.spring6recipeapp.commands.NoteCommand;
-import com.ltev.spring6recipeapp.commands.RecipeCommand;
+import com.ltev.spring6recipeapp.commands.*;
+import com.ltev.spring6recipeapp.domains.Category;
 import com.ltev.spring6recipeapp.domains.Difficulty;
+import com.ltev.spring6recipeapp.domains.Ingredient;
 import com.ltev.spring6recipeapp.domains.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,10 @@ class ToRecipeConverterTest {
 
     @BeforeEach
     void setUp() {
-        converter = new ToRecipeConverter(new ToNoteConverter(), new ToCategoryConverter());
+        converter = new ToRecipeConverter(
+                new ToNoteConverter(),
+                new ToCategoryConverter(),
+                new ToIngredientConverter(new ToUnitOfMeasureConverter()));
     }
 
     @Test
@@ -46,6 +49,24 @@ class ToRecipeConverterTest {
         categoryCmd2.setId(2L);
         categoryCmd2.setDescription("Category Description 2");
 
+        UnitOfMeasureCommand unitOfMeasureCmd1 = new UnitOfMeasureCommand();
+        unitOfMeasureCmd1.setId(1L);
+        unitOfMeasureCmd1.setDescription("gram");
+
+        UnitOfMeasureCommand unitOfMeasureCmd2 = new UnitOfMeasureCommand();
+        unitOfMeasureCmd1.setId(2L);
+        unitOfMeasureCmd1.setDescription("ml");
+
+        IngredientCommand ingredientCmd1 = new IngredientCommand();
+        ingredientCmd1.setId(1L);
+        ingredientCmd1.setDescription("Ingredient Description 1");
+        ingredientCmd1.setUom(unitOfMeasureCmd1);
+
+        IngredientCommand ingredientCmd2 = new IngredientCommand();
+        ingredientCmd1.setId(2L);
+        ingredientCmd1.setDescription("Ingredient Description 2");
+        ingredientCmd1.setUom(unitOfMeasureCmd2);
+
         RecipeCommand cmd = new RecipeCommand();
         cmd.setId(10L);
         cmd.setDescription("Recipe Description");;
@@ -58,6 +79,7 @@ class ToRecipeConverterTest {
         cmd.setDifficulty(Difficulty.MODERATE);
         cmd.setNote(noteCmd);
         cmd.setCategories(Set.of(categoryCmd1, categoryCmd2));
+        cmd.setIngredients(Set.of(ingredientCmd1, ingredientCmd2));
 
         // when
         Recipe recipe = converter.convert(cmd);
@@ -77,5 +99,9 @@ class ToRecipeConverterTest {
         assertEquals(noteCmd.getDescription(), recipe.getNote().getDescription());
 
         assertEquals(2, recipe.getCategories().size());
+        assertEquals(Category.class, recipe.getCategories().stream().findAny().get().getClass());
+
+        assertEquals(2, recipe.getIngredients().size());
+        assertEquals(Ingredient.class, recipe.getIngredients().stream().findAny().get().getClass());
     }
 }

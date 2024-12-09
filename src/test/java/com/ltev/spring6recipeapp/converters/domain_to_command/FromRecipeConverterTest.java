@@ -1,10 +1,9 @@
 package com.ltev.spring6recipeapp.converters.domain_to_command;
 
+import com.ltev.spring6recipeapp.commands.CategoryCommand;
+import com.ltev.spring6recipeapp.commands.IngredientCommand;
 import com.ltev.spring6recipeapp.commands.RecipeCommand;
-import com.ltev.spring6recipeapp.domains.Category;
-import com.ltev.spring6recipeapp.domains.Difficulty;
-import com.ltev.spring6recipeapp.domains.Note;
-import com.ltev.spring6recipeapp.domains.Recipe;
+import com.ltev.spring6recipeapp.domains.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ class FromRecipeConverterTest {
 
     @BeforeEach
     void setUp() {
-        converter = new FromRecipeConverter(new FromNoteConverter(), new FromCategoryConverter());
+        converter = FromRecipeConverter.instance();
     }
 
     @Test
@@ -44,6 +43,8 @@ class FromRecipeConverterTest {
         category2.setId(2L);
         category2.setDescription("Category Description 2");
 
+        Ingredient ingredient = new Ingredient();
+
         Recipe recipe = new Recipe();
         recipe.setId(10L);
         recipe.setDescription("Note Description");;
@@ -57,6 +58,7 @@ class FromRecipeConverterTest {
         recipe.setNote(note);
         recipe.addCategory(category1);
         recipe.addCategory(category2);
+        recipe.addIngredient(ingredient);
 
         // when
         RecipeCommand cmd = converter.convert(recipe);
@@ -76,6 +78,10 @@ class FromRecipeConverterTest {
         assertEquals(note.getDescription(), cmd.getNote().getDescription());
 
         assertEquals(2, cmd.getCategories().size());
+        assertEquals(CategoryCommand.class, cmd.getCategories().stream().findAny().get().getClass());
+
+        assertEquals(1, cmd.getIngredients().size());
+        assertEquals(IngredientCommand.class, cmd.getIngredients().stream().findAny().get().getClass());
     }
 
 }

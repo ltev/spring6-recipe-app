@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+
 @Component
 @AllArgsConstructor
 public class FromRecipeConverter extends AbstractConverterUsingAnnotation<Recipe, RecipeCommand> {
@@ -16,6 +18,24 @@ public class FromRecipeConverter extends AbstractConverterUsingAnnotation<Recipe
 
     private final FromNoteConverter noteConverter;
     private final FromCategoryConverter categoryConverter;
+    private final FromIngredientConverter ingredientConverter;
+
+    public static FromRecipeConverter instance() {
+        return new FromRecipeConverter(
+                new FromNoteConverter(),
+                new FromCategoryConverter(),
+                new FromIngredientConverter(new FromUnitOfMeasureConverter())
+        );
+    }
+
+    @Override
+    protected void convertIterableFields(Recipe sourceRecipe, RecipeCommand desRecipeCommand) {
+        desRecipeCommand.setCategories(
+                createCollection(sourceRecipe.getCategories(), new HashSet<>(), categoryConverter));
+        desRecipeCommand.setIngredients(
+                createCollection(sourceRecipe.getIngredients(), new HashSet<>(), ingredientConverter)
+        );
+    }
 
     @Override
     protected RecipeCommand getNewEmptyConvertedInstance() {
@@ -26,8 +46,6 @@ public class FromRecipeConverter extends AbstractConverterUsingAnnotation<Recipe
     protected Converter getConverter(Class<?> fromType) {
         if (fromType == Note.class) {
             return noteConverter;
-        } else if (fromType == Category.class) {
-            return categoryConverter;
         }
         throw new RuntimeException("Not found for class: " + fromType);
     }

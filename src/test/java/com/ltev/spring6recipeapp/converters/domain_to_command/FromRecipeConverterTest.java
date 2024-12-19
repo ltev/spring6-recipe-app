@@ -3,6 +3,7 @@ package com.ltev.spring6recipeapp.converters.domain_to_command;
 import com.ltev.spring6recipeapp.commands.CategoryCommand;
 import com.ltev.spring6recipeapp.commands.IngredientCommand;
 import com.ltev.spring6recipeapp.commands.RecipeCommand;
+import com.ltev.spring6recipeapp.commands.UnitOfMeasureCommand;
 import com.ltev.spring6recipeapp.domains.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +44,10 @@ class FromRecipeConverterTest {
         category2.setId(2L);
         category2.setDescription("Category Description 2");
 
+        UnitOfMeasure uom1 = new UnitOfMeasure();
+
         Ingredient ingredient = new Ingredient();
+        ingredient.setUom(uom1);
 
         Recipe recipe = new Recipe();
         recipe.setId(10L);
@@ -80,8 +84,10 @@ class FromRecipeConverterTest {
         assertEquals(2, cmd.getCategories().size());
         assertEquals(CategoryCommand.class, cmd.getCategories().stream().findAny().get().getClass());
 
+        IngredientCommand ingredientCmd = cmd.getIngredients().stream().findAny().get();
         assertEquals(1, cmd.getIngredients().size());
         assertEquals(IngredientCommand.class, cmd.getIngredients().stream().findAny().get().getClass());
+        assertEquals(UnitOfMeasureCommand.class, ingredientCmd.getUom().getClass());
     }
 
 }
